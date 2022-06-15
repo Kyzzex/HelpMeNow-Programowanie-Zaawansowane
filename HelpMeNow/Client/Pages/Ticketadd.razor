@@ -1,0 +1,96 @@
+﻿@page "/ticketadd"
+@using HelpMeNow.Shared
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+@inject AuthenticationStateProvider authenticationStateProvider
+@attribute [Authorize]
+
+
+<body>
+    <br />
+        <h1>Dodaj zgłoszenie</h1>
+<br />
+<div class="user">
+<AuthorizeView>
+	<label for="user">Zalogowany użytkownik: </label>
+        <input id="user" type="text" value="@context.User.Identity.Name" readonly disabled> 
+</AuthorizeView>
+</div>
+<br />
+<br />
+
+<div class="input">
+<EditForm Model="ticket" OnValidSubmit="CreateTicket">
+    <DataAnnotationsValidator></DataAnnotationsValidator>
+
+    <div class="mb-0 w-25">
+        <label for="title">Tytuł:</label>
+        <InputText id="title" @bind-Value="ticket.Title" class="form-control" required="required"></InputText>
+        
+    </div>
+    <br />
+      <div class="mb-0 w-50">
+        <label for="Description">Opis:</label>
+        <InputTextArea id="Description" @bind-Value="ticket.Description"  class="form-control" required="required" rows="5"></InputTextArea>
+       
+    </div>
+    <br />
+
+      <div>
+               
+          <label for="Prio">Wybierz priorytet:</label>
+
+        <InputSelect id="Prio" @bind-Value="ticket.Prio"  required="required" default="5">
+            
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        
+        </InputSelect>
+        <p style="font-size:small">Najwyższy priorytet to 1, najniższy 5.</p>
+    </div>
+
+    <br />
+
+    <button type="submit" class="btn btn-primary float-start bg-dark">Utwórz zgłoszenie</button>
+
+  
+    <ValidationSummary></ValidationSummary>
+  
+</EditForm>
+</div>
+</body>
+
+@code {
+
+    Ticket ticket = new Ticket();
+
+    public async Task<Ticket> TicketCreator(Ticket ticket) //--------> Json Tworzenie ticketu
+    {
+        var result = await Http.PostAsJsonAsync("api/ticket", ticket);
+        var newTicket = (await result.Content
+        .ReadFromJsonAsync<Ticket>());
+        
+
+        return newTicket;
+
+
+
+    }
+    async void CreateTicket() //------> Tworzenie ticketu
+    {
+       
+        var result = await TicketCreator(ticket);
+        NavigationManager.NavigateTo("/ticketlist");
+        
+      
+    }
+    
+
+ 
+    
+
+  
+}

@@ -1,0 +1,92 @@
+﻿@page "/ticketlist"
+@using HelpMeNow.Shared
+@using System.Security.Claims
+@inject AuthenticationStateProvider AuthStateProvider
+@inject HttpClient Http
+@attribute [Authorize]
+
+<PageTitle>Tickets</PageTitle>
+<body>
+
+@if (authorized)
+{
+    <h1 class="text-center">Zgłoszenia</h1>
+}
+else
+{
+    <h1>Moje Zgłoszenia</h1>
+}
+
+@if (Tickets == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col">Tytuł</th>
+                <th scope="col">Data dodania</th>
+                <th scope="col">Użytkownik</th>
+                <th scope="col">Status</th>
+                <th scope="col">Priorytet</th>
+            </tr>
+        </thead>
+        <tbody>
+         @foreach (var ticket in Tickets)
+            {
+               
+                <tr> 
+                    <td>
+                        <a class="text-decoration-none col link-light"  href="/Ticket/@ticket.Id">
+                        @ticket.Title
+                       </a>
+                        </td>
+                    <td>@ticket.Created</td>
+                    <td>@ticket.Email</td>
+                    @if (ticket.isOpen)
+                    {
+                        <td>Otwarty</td>
+                    }
+                    else
+                    {
+                        <td>Zamknięty</td>
+                    }
+                    <td>@ticket.Prio</td>
+                    
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+</body>
+
+@code {
+
+    private Ticket[]? Tickets;
+
+    bool authorized = false;
+
+
+    protected override async Task OnInitializedAsync()  //-----> Sprawdzenie czy zalogowany użytkownik jest adminem
+    {
+        string role = (await AuthStateProvider.GetAuthenticationStateAsync())
+            .User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+        if (role.Contains("Admin"))
+        {
+            authorized = true;
+        }
+
+        if (authorized)
+        {
+            Tickets = await Http.GetFromJsonAsync<Ticket[]>("api/Ticket");  //-----> JSON Wyszukanie listy ticketów
+        }
+        else
+        {
+            Tickets = await Http.GetFromJsonAsync<Ticket[]>("api/Ticket/MyTickets");  //-----> Wyszukanie listy ticketów zalogowanego użytkownika
+        }
+    }
+
+}

@@ -1,0 +1,54 @@
+﻿@page "/register"
+@using HelpMeNow.Shared
+@inject HttpClient Http
+@inject NavigationManager navigationManager
+
+<PageTitle>Register</PageTitle>
+<body>
+<h3>Zarejestruj się</h3>
+
+<EditForm Model="user" OnValidSubmit="Registration">
+	<DataAnnotationsValidator />
+<div class="mb-3">
+	<label for="email">Email</label>
+	<InputText id="email" @bind-Value="user.Email" class="form-control" />
+	<ValidationMessage For="@(() => user.Email)" />
+	</div>
+	<div class="mb-3">
+	<label for="password">Hasło</label>
+	<InputText id="password" @bind-Value="user.Password" class="form-control" type="password" />
+	<ValidationMessage For="@(() => user.Password)" />
+	</div>
+	<button type="submit" class="btn btn-primary">Zarejestruj się</button>
+	<div class="text-danger">
+		<span>@error</span>
+	</div>
+
+</EditForm>
+</body>
+@code {
+	UserRegister user = new UserRegister();
+
+	string error = string.Empty;
+
+	public async Task<Response<int>> UserRegister(UserRegister request) //---------> Json Rejestracja
+	{
+		var result = await Http.PostAsJsonAsync("api/auth/register", request);
+		return await result.Content.ReadFromJsonAsync<Response<int>>();
+
+	}
+
+	async Task Registration() //-----------> Rejestracja
+	{
+		var result = await UserRegister(user);
+		if(!result.Success)
+		{
+			error = result.Message;
+		}
+		else
+		{
+			error = string.Empty;
+			navigationManager.NavigateTo("");
+		}
+	}
+}

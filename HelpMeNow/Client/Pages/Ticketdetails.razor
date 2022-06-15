@@ -1,0 +1,168 @@
+﻿@page "/Ticket/{id:int}"
+@using HelpMeNow.Shared
+@using System.Security.Claims
+@inject HttpClient Http
+@inject AuthenticationStateProvider AuthStateProvider
+@inject NavigationManager NavigationManager
+@attribute [Authorize]
+
+
+<PageTitle>TicketDetail</PageTitle>
+@if (ticket == null)
+{
+    <p><em>Loading...</em></p>
+}
+else
+{
+
+<div class="topnav">
+            <h2 class="PageTitle">Podgląd zgłoszenia</h2>
+			</div>
+			<br />
+			<button type="button" class="btn btn-dark" @onclick="GoBack">Wróć</button>
+			
+			@if(authorized)
+			{
+				<button type="button" class="btn btn-danger float-start" @onclick="DeletingTicket">Usuń zgłoszenie</button>
+			}
+			<br />
+			<br />
+			
+			<div class="details">
+				
+				<label for="Time">Utworzony: </label>
+					<input id="Time" type="text" width="148" height="148" value="@ticket.Created" readonly disabled>
+			
+					<label for="Prio">Priorytet: </label>
+					<input id="Prio" type="text" value="@ticket.Prio" readonly disabled>
+					<br />
+					<br />
+
+					<label for="User">Utworzony przez: </label>
+					<input id="User" type="text" value="@ticket.Email" readonly disabled>
+					<br />
+					<br />
+
+					<p>
+						<label for="Title">Tytuł: </label>
+						<input id="Title" type="text" value="@ticket.Title" readonly>
+					</p>
+
+				
+			</div>
+			
+
+			<div class="Desc">
+					<h3 class="text-center">Opis</h3>
+					<br />
+				<p>@ticket.Description</p>
+			</div>
+			
+			<br />
+			<br />
+			<div class="Boxes">
+			
+
+				@if (!authorized)
+				{
+					<div class="Sol">
+						<h3 class="text-center">Odpowiedź</h3>
+						<br />
+						<p>@ticket.Solution</p>
+					</div>;
+				}
+
+
+
+				@if (authorized)
+				{
+					<EditForm Model="ticket" OnValidSubmit="SetTicketAsClose">
+
+						<div class="Boxes">
+							<div class="Solution">
+								<div class="mb-0 w-50">
+
+									<label for="Solution">Wpisz odpowiedź</label>
+									<InputTextArea id="SolArea" @bind-Value="ticket.Solution"  class="form-control" ></InputTextArea>
+								</div>
+
+								<button type="button" class="btn btn-dark" @onclick="UpdatingTicket">Zapisz Odpowiedź</button>
+								<button type="submit" class="btn btn-primary float" id="close">Zamknij Zgłoszenie</button
+							</div>
+							
+						</div>
+					</EditForm>
+				}
+			</div>
+		}
+@code {
+	private Ticket? ticket;
+	bool authorized = false;
+
+	[Parameter]
+
+	public int Id { get; set; }
+
+
+
+	protected override async Task OnInitializedAsync()   //-------> Sprawdzanie czy aktualnie zalogowany jest Administrator
+	{
+		string role = (await AuthStateProvider.GetAuthenticationStateAsync())
+			.User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.Role).Value;
+		if (role.Contains("Admin"))
+		{
+			authorized = true;
+		}
+	}
+
+	protected override async Task OnParametersSetAsync()   //------> Ustawienie parametru startowego
+	{
+		var result = await GetTicketById(Id);
+		ticket = result;
+	}
+
+	public async Task<Ticket> GetTicketById(int ticketid)   //-----> JSON Wyszukanie Ticketu bo Id
+	{
+		var result = await Http.GetFromJsonAsync<Ticket>($"api/Ticket/{ticketid}");
+		return result;
+	}
+
+	public async Task DeleteTicket(Ticket ticket)  //-----> JSON Usunięcie ticketu
+	{
+		var result = await Http.DeleteAsync($"api/Ticket/{ticket.Id}");
+	}
+	async void DeletingTicket()
+	{
+		await DeleteTicket(ticket);
+		NavigationManager.NavigateTo("/ticketlist");
+	}
+
+	public async Task<Ticket>UpdateTicket(Ticket ticket)   //-----> JSON Aktualizacja ticketu 
+	{
+		var result = await Http.PutAsJsonAsync($"api/Ticket", ticket);
+		return await result.Content.ReadFromJsonAsync<Ticket>();
+	}
+	public async Task<Ticket>CloseTicket(Ticket ticket)  //-----> JSON Zamknięcie ticketu
+	{
+		var result = await Http.PutAsJsonAsync($"api/Ticket/closeticket", ticket); 
+		return await result.Content.ReadFromJsonAsync<Ticket>();
+	}
+
+	async void UpdatingTicket()  //-----> Aktualizacja ticketu
+	{
+		ticket = await UpdateTicket(ticket);
+
+	}
+	async void SetTicketAsClose()  //-----> Zamknięcie ticketu
+	{
+		ticket = await CloseTicket(ticket);
+		NavigationManager.NavigateTo("/ticketlist");
+	}
+	async void GoBack()  //-----> Powrót do listy ticketów
+	{
+		NavigationManager.NavigateTo("/ticketlist");
+	}
+
+
+}
+

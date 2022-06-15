@@ -1,0 +1,51 @@
+﻿h3 {
+    width: 400px;
+    font-family: "Arial";
+    font-weight: 400;
+    text-align: center;
+    border: 2px ridge;
+    border-color: #A9E5BB;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 8px 8px lightgrey;
+}
+
+h1 {
+    margin-left: 50vh;
+    margin-right: 60vh;
+    font-weight: 500;
+    text-align: center;
+    font-family: Helvetica, sans-serif;
+    border: 4px ridge;
+    border-color: #93BEDF;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 8px 8px lightgrey;
+    background-color: white;
+    text-align: center;
+}
+
+.btn-primary:hover {
+    text-decoration: underline solid white;
+}
+
+body {
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,0.6001751042213761) 0%, rgba(231,231,231,0.465721322708771) 100%);
+    min-height: 100vh;
+    /**/
+}
+
+label {
+    font-size: x-large;
+    font-family: "Arial";
+    font-weight: 600;
+}
+
+.input {
+    margin-left: 50vh;
+}
+
+.user {
+    margin-left: 50vh;
+}
+
+

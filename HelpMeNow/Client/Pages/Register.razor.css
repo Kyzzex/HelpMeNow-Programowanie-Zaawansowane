@@ -1,0 +1,40 @@
+﻿
+h3 {
+    margin: 25px 25px 25px 25px;
+    width: 400px;
+    font-family: "Arial";
+    font-weight: 400;
+    text-align: center;
+    border: 2px ridge;
+    border-color: #A9E5BB;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 8px 8px lightgrey;
+}
+
+.mb-3 {
+    width: 400px;
+    margin: 25px 25px 25px 25px;
+    align-content: center;
+}
+
+form > button {
+    margin: 20px 20px 20px 150px;
+    width: 150px;
+    background-color: #114B5F;
+}
+
+.btn-primary:hover {
+    text-decoration: underline solid white;
+}
+
+body {
+    max-height: max-content;
+    max-width: max-content;
+    margin: auto;
+    margin-top: 25vh;
+    /**/
+    border: 2px ridge;
+    border-color: #A9E5BB;
+    border-radius: 20px 20px 20px 20px;
+    box-shadow: 8px 8px lightgrey;
+}

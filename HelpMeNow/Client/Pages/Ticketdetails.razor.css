@@ -1,0 +1,125 @@
+﻿html {
+    margin: 0;
+    padding: 0;
+}
+.topnav {
+    background-color: #15617A;
+    overflow: hidden;
+    margin: 0;
+}
+.Title {
+    
+    font-size: 20px;
+    letter-spacing: 2px;
+    word-spacing: 2px;
+    color: #000000;
+    font-weight: normal;
+    text-decoration: none;
+    font-style: normal;
+    font-variant: normal;
+    text-transform: none;
+    width: 400px;
+    
+}
+.Boxes {
+    margin-top: 120px;
+  
+}
+.Desc {
+    float: left;
+    width: 150vh;
+    height: 30vh;
+    margin-left: 10vh;
+    margin-right: 10vh;
+    box-shadow: inset 0px 0px 16px 0px rgba(0,0,0,0.39);
+    border-radius: 20px 20px 20px 20px;
+    border-bottom: 5px groove black;
+    padding: 20px;
+}
+
+.Desc > h3 {
+    border-bottom: 5px groove black;
+    padding-top: 10px;
+}
+
+.PageTitle {
+    
+    color: #f2f2f2;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+    font-size: 32px;
+}
+
+.Sol {
+    float: left;
+    width: 150vh;
+    height: 25vh;
+    margin-left: 10vh;
+    margin-top: 35px;
+    margin-bottom: 35px;
+    box-shadow: inset 0px 0px 16px 0px rgba(0,0,0,0.39);
+    border-radius: 20px 20px 20px 20px;
+    border-bottom: 5px groove black;
+    padding: 20px;
+}
+
+    .Sol > h3 {
+        border-bottom: 5px groove black;
+    }
+
+.Solution {
+    float: left;
+    margin-left: 10vh;
+    margin-top: 35px;
+    width: 150vh;
+    height: 35vh;
+
+}
+
+.Solution > .mb-0 w-50 {
+    
+    
+    margin-bottom: 25px;
+    font-size: 25px;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 10vh;
+}
+
+
+
+button {
+    margin: 5px 5px 5px 5px;
+}
+
+.btn-dark:hover {
+    text-decoration: underline solid white;
+}
+
+.btn-danger {
+    align-content:end;
+
+}
+
+.btn-danger:hover {
+    text-decoration: underline solid white;
+}
+
+.btn-primary:hover {
+    text-decoration: underline solid white;
+}
+
+h2 {
+    background-color: #15617A;
+
+}
+
+input #Time {
+    width=148;
+    height=148;
+}
+
+.details {
+    margin-left: 30px;
+}

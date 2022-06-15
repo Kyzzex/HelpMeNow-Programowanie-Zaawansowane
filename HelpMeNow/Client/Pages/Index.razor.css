@@ -1,0 +1,37 @@
+﻿div > img {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+    border-bottom: 7px ridge;
+    border-color: #A4DEF9;
+}
+
+body {
+    background: rgb(34,193,195);
+    background: linear-gradient(0deg, rgba(34,193,195,0.6001751042213761) 0%, rgba(253,187,45,0.373284347918855) 100%);
+    min-height: 100vh;
+
+    font-family: Avantgarde, TeX Gyre Adventor, URW Gothic L, sans-serif
+}
+
+.title {
+    /*border styling*/
+    border-bottom: 7px ridge;
+    border-color: #0A7AAE;
+    border-radius: 20px 20px 20px 20px;
+    width: 20%;
+    /*pozycja na stronie*/
+    margin-left: auto;
+    margin-right: auto;
+    /*tekst*/
+    font-weight: 900;
+    text-align: center;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+
+h3, h4 {
+    text-align: left;
+}
+
+
