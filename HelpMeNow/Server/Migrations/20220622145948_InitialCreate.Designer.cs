@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace HelpMeNow.Server.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20220614161011_InitialCreate")]
+    [Migration("20220622145948_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

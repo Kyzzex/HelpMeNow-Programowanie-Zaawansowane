@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations;
 
 namespace HelpMeNow.Shared
 {
@@ -27,7 +28,7 @@ namespace HelpMeNow.Shared
 
         public User? User { get; set; }
 
-
+        [Range(1,5)]
         public int Prio { get; set; } = 5;
 
 

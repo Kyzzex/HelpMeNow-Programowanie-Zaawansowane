@@ -19,6 +19,11 @@
 	<InputText id="password" @bind-Value="user.Password" class="form-control" type="password" />
 	<ValidationMessage For="@(() => user.Password)" />
 	</div>
+	<div class="mb-3">
+	<label for="password">Powtórz hasło</label>
+	<InputText id="password" @bind-Value="user.Confirm" class="form-control" type="password" />
+	<ValidationMessage For="@(() => user.Confirm)" />
+	</div>
 	<button type="submit" class="btn btn-primary">Zarejestruj się</button>
 	<div class="text-danger">
 		<span>@error</span>

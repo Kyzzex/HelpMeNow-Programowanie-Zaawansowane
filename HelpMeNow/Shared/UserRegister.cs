@@ -14,6 +14,9 @@ namespace HelpMeNow.Shared
 
         [Required, StringLength(50, MinimumLength = 6, ErrorMessage = "Hasło musi się składać z minimum 6 znaków")]
         public string Password { get; set; } = string.Empty;
+       
+        [Compare("Password", ErrorMessage = "Hasła nie są takie same")]
+        public string Confirm { get; set; } = string.Empty;
 
 
 
